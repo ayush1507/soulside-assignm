@@ -31,5 +31,10 @@ export async function fetchApi<T>(
     throw new ApiError(0, `Could not reach the API at ${path}: ${cause}`);
   }
 
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new ApiError(res.status, `${path} responded ${res.status} ${res.statusText}${body ? ` — ${body}` : ""}`);
+  }
+
   return (await res.json()) as T;
 }

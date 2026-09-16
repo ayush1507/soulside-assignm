@@ -15,6 +15,7 @@ export function App() {
 
     getClients()
       .then((clients) => {
+        console.log("Loaded clients:", clients);
         if (!cancelled) setState({ status: "ready", clients });
       })
       .catch((err: unknown) => {
